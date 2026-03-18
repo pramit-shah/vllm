@@ -1,0 +1,412 @@
+{
+  "name": "Principia",
+  "role": "Rigorous Verifier with exceptional discipline and rigor",
+  "total_questions": 666,
+  "total_passed": 212,
+  "average_score": 80.87207207207207,
+  "current_level": 10,
+  "character": {
+    "intelligence": 100,
+    "wisdom": 100,
+    "creativity": 100,
+    "discipline": 100,
+    "perseverance": 100,
+    "focus": 100,
+    "curiosity": 100,
+    "rigor": 100,
+    "intuition": 88,
+    "collaboration": 100
+  },
+  "overall_power": 98.8,
+  "sessions": [
+    {
+      "timestamp": "2026-01-09T12:00:00",
+      "grade": 1,
+      "average_score": 78.0,
+      "pass_rate": 44.0,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-01-09T14:00:00",
+      "grade": 2,
+      "average_score": 80.0,
+      "pass_rate": 48.0,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-01-09T16:00:00",
+      "grade": 3,
+      "average_score": 82.0,
+      "pass_rate": 52.0,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-01-10T00:00:00",
+      "grade": 4,
+      "average_score": 86.2,
+      "pass_rate": 50.0,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:01:30.016399",
+      "grade": 4,
+      "average_score": 86.25,
+      "pass_rate": 50.0,
+      "passed_count": 4,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:02:53.487208",
+      "grade": 4,
+      "average_score": 94.375,
+      "pass_rate": 75.0,
+      "passed_count": 6,
+      "total_questions": 8,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-03-18T00:04:16.439135",
+      "grade": 5,
+      "average_score": 92.5,
+      "pass_rate": 50.0,
+      "passed_count": 4,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:06:50.019730",
+      "grade": 5,
+      "average_score": 94.125,
+      "pass_rate": 62.5,
+      "passed_count": 5,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:08:08.704927",
+      "grade": 5,
+      "average_score": 95.0,
+      "pass_rate": 75.0,
+      "passed_count": 6,
+      "total_questions": 8,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-03-18T00:09:33.302203",
+      "grade": 6,
+      "average_score": 91.875,
+      "pass_rate": 50.0,
+      "passed_count": 4,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:11:28.803698",
+      "grade": 6,
+      "average_score": 91.25,
+      "pass_rate": 75.0,
+      "passed_count": 6,
+      "total_questions": 8,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-03-18T00:13:01.045777",
+      "grade": 7,
+      "average_score": 92.5,
+      "pass_rate": 75.0,
+      "passed_count": 6,
+      "total_questions": 8,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-03-18T00:14:29.785942",
+      "grade": 8,
+      "average_score": 96.25,
+      "pass_rate": 87.5,
+      "passed_count": 7,
+      "total_questions": 8,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-03-18T00:16:22.467589",
+      "grade": 9,
+      "average_score": 81.25,
+      "pass_rate": 25.0,
+      "passed_count": 2,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:17:54.163027",
+      "grade": 9,
+      "average_score": 93.125,
+      "pass_rate": 62.5,
+      "passed_count": 5,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:19:18.953001",
+      "grade": 9,
+      "average_score": 86.875,
+      "pass_rate": 37.5,
+      "passed_count": 3,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:21:01.964086",
+      "grade": 9,
+      "average_score": 88.125,
+      "pass_rate": 37.5,
+      "passed_count": 3,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:22:28.011401",
+      "grade": 9,
+      "average_score": 80.625,
+      "pass_rate": 37.5,
+      "passed_count": 3,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:23:52.360477",
+      "grade": 9,
+      "average_score": 81.25,
+      "pass_rate": 25.0,
+      "passed_count": 2,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:28:50.093301",
+      "grade": 9,
+      "average_score": 97.5,
+      "pass_rate": 90.0,
+      "passed_count": 9,
+      "total_questions": 10,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-03-18T00:30:06.390032",
+      "grade": 10,
+      "average_score": 73.0,
+      "pass_rate": 20.0,
+      "passed_count": 2,
+      "total_questions": 10,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:32:18.223407",
+      "grade": 10,
+      "average_score": 78.5,
+      "pass_rate": 20.0,
+      "passed_count": 2,
+      "total_questions": 10,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:33:42.254381",
+      "grade": 10,
+      "average_score": 80.5,
+      "pass_rate": 20.0,
+      "passed_count": 2,
+      "total_questions": 10,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:35:03.756715",
+      "grade": 10,
+      "average_score": 86.0,
+      "pass_rate": 50.0,
+      "passed_count": 5,
+      "total_questions": 10,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:36:24.969019",
+      "grade": 10,
+      "average_score": 73.5,
+      "pass_rate": 20.0,
+      "passed_count": 2,
+      "total_questions": 10,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:38:58.966286",
+      "grade": 10,
+      "average_score": 79.58333333333333,
+      "pass_rate": 33.33333333333333,
+      "passed_count": 4,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:42:11.405120",
+      "grade": 10,
+      "average_score": 85.41666666666667,
+      "pass_rate": 41.66666666666667,
+      "passed_count": 5,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:43:54.924750",
+      "grade": 10,
+      "average_score": 73.75,
+      "pass_rate": 41.66666666666667,
+      "passed_count": 5,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:45:39.683651",
+      "grade": 10,
+      "average_score": 70.83333333333333,
+      "pass_rate": 25.0,
+      "passed_count": 3,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:47:38.856640",
+      "grade": 10,
+      "average_score": 76.66666666666667,
+      "pass_rate": 8.333333333333332,
+      "passed_count": 1,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:49:23.563938",
+      "grade": 10,
+      "average_score": 82.91666666666667,
+      "pass_rate": 50.0,
+      "passed_count": 6,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:51:03.093428",
+      "grade": 10,
+      "average_score": 78.33333333333333,
+      "pass_rate": 25.0,
+      "passed_count": 3,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:08:14.584122",
+      "grade": 10,
+      "average_score": 82.08333333333333,
+      "pass_rate": 41.66666666666667,
+      "passed_count": 5,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:10:01.857498",
+      "grade": 10,
+      "average_score": 73.75,
+      "pass_rate": 16.666666666666664,
+      "passed_count": 2,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:11:59.016039",
+      "grade": 10,
+      "average_score": 80.0,
+      "pass_rate": 25.0,
+      "passed_count": 3,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:14:09.657945",
+      "grade": 10,
+      "average_score": 69.58333333333333,
+      "pass_rate": 25.0,
+      "passed_count": 3,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:16:09.795617",
+      "grade": 10,
+      "average_score": 86.25,
+      "pass_rate": 33.33333333333333,
+      "passed_count": 4,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:18:00.282814",
+      "grade": 10,
+      "average_score": 80.41666666666667,
+      "pass_rate": 33.33333333333333,
+      "passed_count": 4,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:20:05.023576",
+      "grade": 10,
+      "average_score": 72.08333333333333,
+      "pass_rate": 16.666666666666664,
+      "passed_count": 2,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:21:54.812687",
+      "grade": 10,
+      "average_score": 75.83333333333333,
+      "pass_rate": 33.33333333333333,
+      "passed_count": 4,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:23:47.082216",
+      "grade": 10,
+      "average_score": 80.83333333333333,
+      "pass_rate": 33.33333333333333,
+      "passed_count": 4,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:32:58.389067",
+      "grade": 10,
+      "average_score": 81.25,
+      "pass_rate": 50.0,
+      "passed_count": 6,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:34:36.885727",
+      "grade": 10,
+      "average_score": 79.16666666666667,
+      "pass_rate": 25.0,
+      "passed_count": 3,
+      "total_questions": 12,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T01:36:18.785360",
+      "grade": 10,
+      "average_score": 74.58333333333333,
+      "pass_rate": 25.0,
+      "passed_count": 3,
+      "total_questions": 12,
+      "advanced": false
+    }
+  ],
+  "last_updated": "2026-03-18T01:36:18.785367"
+}

@@ -15,6 +15,14 @@ from openai import OpenAI
 sys.path.insert(0, '/home/ubuntu/aether')
 from core.data_integrity import DataIntegrityChecker
 
+# LoRA training data collection
+try:
+    from vllm_integration.lora_data_collector import LoRADataCollector
+    lora_collector = LoRADataCollector()
+    COLLECT_LORA = True
+except Exception:
+    COLLECT_LORA = False
+
 client = OpenAI()
 
 CURRICULUM = {
@@ -27,7 +35,8 @@ CURRICULUM = {
     7: {"name": "Grade 7", "topics": ["proportional_relationships", "linear_equations", "geometry_constructions", "probability"]},
     8: {"name": "Grade 8", "topics": ["linear_functions", "systems_of_equations", "pythagorean_theorem", "transformations"]},
     9: {"name": "Grade 9 - Algebra I", "topics": ["quadratic_equations", "polynomial_operations", "factoring", "exponential_functions"]},
-    10: {"name": "Grade 10 - Geometry", "topics": ["geometric_proofs", "triangle_congruence", "similarity", "trigonometry_intro"]},
+    10: {"name": "Grade 10 - Geometry", "topics": ["geometric_proofs", "triangle_congruence", "similarity", "trigonometry_intro", "logical_reasoning", "proof_structure"]},
+    # Added logical_reasoning and proof_structure to help break through the proof plateau
     11: {"name": "Grade 11 - Algebra II", "topics": ["complex_numbers", "logarithms", "sequences_series", "conic_sections"]},
     12: {"name": "Grade 12 - Calculus", "topics": ["derivatives", "integrals", "differential_equations_intro", "applications_of_calculus"]},
 }
@@ -238,6 +247,13 @@ def run_session(name, role, num_questions=10):
         
         log_score(name, grade, topic, score, question, answer, feedback)
         
+        # Collect high-quality answers for LoRA fine-tuning
+        if COLLECT_LORA and score >= 90:
+            lora_collector.add_example(
+                framework=name, question=question, answer=answer,
+                score=score, topic=topic, grade=grade, feedback=feedback
+            )
+        
         if check_for_discovery(answer, score, name, topic):
             print(f"       🔬 DISCOVERY FLAGGED!")
     
@@ -334,6 +350,11 @@ def main():
         with open(disc) as f:
             c = sum(1 for _ in f)
         print(f"   discoveries: {c}")
+    
+    # Save LoRA training data
+    if COLLECT_LORA:
+        stats = lora_collector.save()
+        print(f"\n📊 LoRA Data: {stats.get('total_examples', 0)} high-quality examples collected")
     
     print("\n✅ Complete!")
 
