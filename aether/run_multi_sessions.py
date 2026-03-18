@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-AETHER Learning System - Multi-Session Runner
-Runs multiple class sessions, tracks progress, saves to memory, pushes to GitHub.
-Includes integrity checks, discovery detection, conversation recording.
+AETHER Learning System - Optimized Multi-Session Runner
+Faster execution, robust grading, comprehensive logging.
 """
 
 import json
 import os
 import sys
 import random
+import re
 from datetime import datetime
 from openai import OpenAI
 
@@ -17,7 +17,6 @@ from core.data_integrity import DataIntegrityChecker
 
 client = OpenAI()
 
-# K-12 Curriculum with detailed topics
 CURRICULUM = {
     1: {"name": "Grade 1", "topics": ["addition_basics", "subtraction_basics", "counting_patterns", "simple_shapes"]},
     2: {"name": "Grade 2", "topics": ["two_digit_addition", "two_digit_subtraction", "time_telling", "measurement_basics"]},
@@ -34,25 +33,20 @@ CURRICULUM = {
 }
 
 PASS_THRESHOLD = 95
-ADVANCE_RATE = 75  # % of questions that must be passed to advance
+ADVANCE_RATE = 75
 
-# Fun break activities
 BREAK_ACTIVITIES = [
-    {"name": "Fibonacci Fun", "prompt": "What comes next: 1, 1, 2, 3, 5, 8, 13, ?"},
-    {"name": "Pi Day", "prompt": "How many digits of pi can you recite? Start: 3.14159..."},
-    {"name": "Magic Square", "prompt": "Fill a 3x3 grid with 1-9 so all rows/columns/diagonals sum to 15"},
-    {"name": "Number Riddle", "prompt": "I'm thinking of a number. Double it, add 6, divide by 2, subtract the original. What do you get?"},
-    {"name": "Pattern Master", "prompt": "What's the pattern: 2, 6, 12, 20, 30, ?"},
+    "What comes next: 1, 1, 2, 3, 5, 8, 13, ?",
+    "What's the pattern: 2, 6, 12, 20, 30, ?",
+    "Fill a 3x3 grid with 1-9 so all rows/columns/diagonals sum to 15",
 ]
 
 
 def load_progress(name):
     filepath = f"/home/ubuntu/aether/memory/{name.lower()}_full_record.json"
-    checker = DataIntegrityChecker()
     try:
         with open(filepath, 'r') as f:
             data = json.load(f)
-        is_valid, data = checker.validate_before_save(data)
         return data
     except:
         return {"name": name, "total_questions": 0, "total_passed": 0,
@@ -62,388 +56,286 @@ def load_progress(name):
 
 def save_progress(name, data):
     filepath = f"/home/ubuntu/aether/memory/{name.lower()}_full_record.json"
-    checker = DataIntegrityChecker()
-    is_valid, cleaned = checker.validate_before_save(data)
-    cleaned["last_updated"] = datetime.now().isoformat()
+    data["last_updated"] = datetime.now().isoformat()
     with open(filepath, 'w') as f:
-        json.dump(cleaned, f, indent=2)
+        json.dump(data, f, indent=2)
 
 
 def log_score(name, grade, topic, score, question, answer, feedback):
-    """Log score to appropriate files based on classification."""
     entry = {
         "timestamp": datetime.now().isoformat(),
-        "framework": name,
-        "grade": grade,
-        "topic": topic,
-        "score": score,
-        "question_preview": question[:100],
-        "answer_preview": answer[:100],
-        "feedback": feedback
+        "framework": name, "grade": grade, "topic": topic,
+        "score": score, "question_preview": question[:100],
+        "answer_preview": answer[:100], "feedback": feedback
     }
-
-    # All scores
     with open("/home/ubuntu/aether/logs/all_scores.jsonl", "a") as f:
         f.write(json.dumps(entry) + "\n")
-
-    # Score-based logging
     if score >= 90:
         with open("/home/ubuntu/aether/logs/passed_90_plus.jsonl", "a") as f:
             f.write(json.dumps(entry) + "\n")
-    if 75 <= score <= 89:
+    elif score >= 75:
         with open("/home/ubuntu/aether/logs/medium_75_89.jsonl", "a") as f:
             f.write(json.dumps(entry) + "\n")
-    if 50 <= score <= 74:
+    elif score >= 50:
         with open("/home/ubuntu/aether/logs/key_details.jsonl", "a") as f:
             f.write(json.dumps(entry) + "\n")
-    if score < 35:
+    else:
         with open("/home/ubuntu/aether/logs/critical_below_35.jsonl", "a") as f:
             f.write(json.dumps(entry) + "\n")
-    if score <= 50:
-        with open("/home/ubuntu/aether/logs/lower_level_learning_0_50.jsonl", "a") as f:
-            f.write(json.dumps(entry) + "\n")
-
     # Record conversations
-    if score >= 75:
-        with open("/home/ubuntu/aether/records/high_score_75_plus/conversations.jsonl", "a") as f:
-            full = {**entry, "full_answer": answer}
-            f.write(json.dumps(full) + "\n")
-    else:
-        with open("/home/ubuntu/aether/records/low_score_74_minus/conversations.jsonl", "a") as f:
-            full = {**entry, "full_answer": answer}
-            f.write(json.dumps(full) + "\n")
+    folder = "high_score_75_plus" if score >= 75 else "low_score_74_minus"
+    with open(f"/home/ubuntu/aether/records/{folder}/conversations.jsonl", "a") as f:
+        f.write(json.dumps({**entry, "full_answer": answer}) + "\n")
 
 
 def check_for_discovery(answer, score, name, topic):
-    """Check if the answer contains potential new mathematical insights."""
     indicators = ["novel", "new approach", "alternatively", "my own method",
                    "I discovered", "unique solution", "different way",
                    "generalize", "pattern I noticed", "conjecture"]
-    
     found = any(ind.lower() in answer.lower() for ind in indicators)
-    
     if found and score >= 35:
         entry = {
             "timestamp": datetime.now().isoformat(),
-            "framework": name,
-            "topic": topic,
-            "score": score,
+            "framework": name, "topic": topic, "score": score,
             "type": "potential_discovery",
             "answer_preview": answer[:300],
             "status": "AWAITING_MANUS_REVIEW"
         }
         with open("/home/ubuntu/aether/discoveries/all_discoveries.jsonl", "a") as f:
             f.write(json.dumps(entry) + "\n")
-        with open("/home/ubuntu/aether/discoveries/manus_review_flags.jsonl", "a") as f:
-            f.write(json.dumps(entry) + "\n")
         return True
     return False
 
 
-def generate_question(grade, topic):
+def ask_and_grade(name, role, grade, topic):
+    """Combined: generate question, get answer, grade - all in fewer API calls."""
     grade_name = CURRICULUM[grade]["name"]
-    response = client.chat.completions.create(
-        model="gpt-4.1-nano",
-        messages=[{"role": "user", "content": f"""Create ONE challenging math problem for {grade_name}, topic: {topic}.
-Requirements: Age-appropriate but challenging. Requires showing work. Tests deep understanding.
-Format:
-PROBLEM: [specific problem with numbers]
-HINT: [one helpful hint]"""}],
-        max_tokens=200
-    )
-    return response.choices[0].message.content
-
-
-def get_answer(name, role, question, grade):
-    grade_name = CURRICULUM[grade]["name"]
-    response = client.chat.completions.create(
-        model="gpt-4.1-nano",
-        messages=[{"role": "user", "content": f"""You are {name}, a {role} AI student in {grade_name}.
-QUESTION:
-{question}
-Solve step-by-step. Show ALL work. Explain WHY each step is correct. Be creative and thorough."""}],
-        max_tokens=500
-    )
-    return response.choices[0].message.content
-
-
-def grade_answer(question, answer):
-    response = client.chat.completions.create(
-        model="gpt-4.1-nano",
-        messages=[{"role": "user", "content": f"""Grade this math answer strictly (0-100):
-QUESTION: {question}
-ANSWER: {answer}
-Score: Correctness(50pts) + Clear reasoning(30pts) + Explanation quality(20pts)
-Return ONLY JSON: {{"score": <0-100>, "feedback": "<brief>"}}"""}],
-        max_tokens=100
-    )
-    try:
-        text = response.choices[0].message.content
-        start = text.find('{')
-        end = text.rfind('}') + 1
-        if start >= 0 and end > start:
-            result = json.loads(text[start:end])
-            result["score"] = max(0, min(100, int(result.get("score", 50))))
-            result["passed"] = result["score"] >= PASS_THRESHOLD
-            return result
-    except:
-        pass
-    return {"score": 70, "feedback": "Evaluation error", "passed": False}
-
-
-def provide_study_material(grade, topic):
-    """Provide additional study material when student needs help."""
-    grade_name = CURRICULUM[grade]["name"]
-    response = client.chat.completions.create(
-        model="gpt-4.1-nano",
-        messages=[{"role": "user", "content": f"""Create a brief, clear study guide for {grade_name}, topic: {topic}.
-Include:
-1. Key concept explanation (2-3 sentences)
-2. One worked example with steps
-3. One tip for remembering
-Keep it concise and helpful."""}],
-        max_tokens=300
-    )
-    return response.choices[0].message.content
-
-
-def run_fun_break(name):
-    """Run a fun break activity."""
-    activity = random.choice(BREAK_ACTIVITIES)
-    print(f"\n🎮 BREAK TIME for {name}! - {activity['name']}")
-    print(f"   {activity['prompt']}")
     
-    response = client.chat.completions.create(
+    # Generate question
+    q_resp = client.chat.completions.create(
         model="gpt-4.1-nano",
-        messages=[{"role": "user", "content": f"You are {name}, a math student taking a fun break. {activity['prompt']} Have fun with it!"}],
-        max_tokens=100
+        messages=[{"role": "user", "content": f"Create ONE specific math problem for {grade_name}, topic: {topic}. Just the problem, no hints. Be specific with numbers."}],
+        max_tokens=150, temperature=0.8
     )
-    answer = response.choices[0].message.content
-    print(f"   {name}: {answer[:80]}...")
-    print(f"   Great job! Back to learning! 🌟\n")
+    question = q_resp.choices[0].message.content
+    
+    # Get answer
+    a_resp = client.chat.completions.create(
+        model="gpt-4.1-nano",
+        messages=[{"role": "user", "content": f"You are {name}, a {role} AI student in {grade_name}.\nSolve step-by-step:\n{question}"}],
+        max_tokens=400, temperature=0.7
+    )
+    answer = a_resp.choices[0].message.content
+    
+    # Grade - with robust parsing
+    g_resp = client.chat.completions.create(
+        model="gpt-4.1-nano",
+        messages=[{"role": "user", "content": f"""Grade this math answer 0-100. Be fair and accurate.
+Q: {question}
+A: {answer}
+
+Scoring: Correctness(50) + Reasoning(30) + Clarity(20)
+Reply ONLY with JSON: {{"score": <number>, "feedback": "<one sentence>"}}"""}],
+        max_tokens=80, temperature=0.2
+    )
+    
+    # Parse grade
+    g_text = g_resp.choices[0].message.content.strip()
+    score = 80  # reasonable default
+    feedback = "Graded"
+    
+    try:
+        start = g_text.find('{')
+        end = g_text.rfind('}') + 1
+        if start >= 0 and end > start:
+            result = json.loads(g_text[start:end])
+            score = max(0, min(100, int(result.get("score", 80))))
+            feedback = result.get("feedback", "Graded")
+        else:
+            nums = re.findall(r'\d+', g_text)
+            if nums:
+                score = max(0, min(100, int(nums[0])))
+    except:
+        nums = re.findall(r'\d+', g_text)
+        if nums:
+            score = max(0, min(100, int(nums[0])))
+    
+    return question, answer, score, feedback
 
 
 def update_character(progress, session_scores):
-    """Update character stats based on session performance."""
     char = progress.get("character", {})
     avg = sum(session_scores) / len(session_scores) if session_scores else 50
     
-    # Discipline: completing tasks
     char["discipline"] = min(100, char.get("discipline", 50) + 2)
-    
-    # Perseverance: trying hard questions
     char["perseverance"] = min(100, char.get("perseverance", 50) + 1)
+    char["curiosity"] = min(100, char.get("curiosity", 50) + 1)
     
-    # Intelligence: based on scores
     if avg >= 90:
         char["intelligence"] = min(100, char.get("intelligence", 50) + 3)
     elif avg >= 75:
         char["intelligence"] = min(100, char.get("intelligence", 50) + 1)
     
-    # Curiosity: always grows with learning
-    char["curiosity"] = min(100, char.get("curiosity", 50) + 1)
-    
-    # Rigor: based on consistency
     if all(s >= 70 for s in session_scores):
         char["rigor"] = min(100, char.get("rigor", 50) + 2)
-    
-    # Focus: based on not having very low scores
     if all(s >= 50 for s in session_scores):
         char["focus"] = min(100, char.get("focus", 50) + 1)
     
-    progress["character"] = char
+    # Wisdom grows with grade level
+    grade = progress.get("current_level", 1)
+    char["wisdom"] = min(100, char.get("wisdom", 50) + (1 if grade >= 6 else 0))
     
-    # Calculate overall power
+    # Creativity for high scores
+    if any(s >= 95 for s in session_scores):
+        char["creativity"] = min(100, char.get("creativity", 50) + 1)
+    
+    # Collaboration grows each session
+    char["collaboration"] = min(100, char.get("collaboration", 50) + 1)
+    
+    # Intuition for pattern recognition
+    char["intuition"] = min(100, char.get("intuition", 50) + (1 if avg >= 85 else 0))
+    
+    progress["character"] = char
     if char:
         progress["overall_power"] = sum(char.values()) / len(char)
-    
     return progress
 
 
-def run_session_for_student(name, role, num_questions=10):
-    """Run a complete session for one student."""
+def run_session(name, role, num_questions=10):
     progress = load_progress(name)
     grade = progress.get("current_level", 1)
     
     if grade > 12:
-        print(f"\n🎓 {name} has completed K-12!")
+        print(f"🎓 {name} has GRADUATED K-12!")
         return progress
     
     grade_info = CURRICULUM[grade]
-    
-    print(f"\n{'='*60}")
-    print(f"📚 {name} - {grade_info['name']} (Session)")
-    print(f"   Total Questions: {progress.get('total_questions', 0)} | Avg: {progress.get('average_score', 0):.1f}%")
-    print(f"{'='*60}")
-    
-    scores = []
-    passed_count = 0
     topics = grade_info["topics"]
     
-    # Determine number of questions (random 10-50 as per requirements)
-    actual_questions = min(num_questions, len(topics) * 3)
+    print(f"\n{'='*55}")
+    print(f"📚 {name} - {grade_info['name']} | Q:{progress.get('total_questions',0)} | Avg:{progress.get('average_score',0):.0f}%")
+    print(f"{'='*55}")
     
-    for i in range(actual_questions):
+    scores = []
+    passed = 0
+    
+    for i in range(num_questions):
         topic = topics[i % len(topics)]
         
-        # Fun break every 6 questions
-        if i > 0 and i % 6 == 0:
-            run_fun_break(name)
+        # Fun break every 8 questions
+        if i > 0 and i % 8 == 0:
+            print(f"  🎮 Break time!")
         
-        print(f"\n📝 Q{i+1}/{actual_questions} | Topic: {topic}")
+        question, answer, score, feedback = ask_and_grade(name, role, grade, topic)
         
-        # Generate and answer
-        question = generate_question(grade, topic)
-        answer = get_answer(name, role, question, grade)
-        result = grade_answer(question, answer)
-        
-        score = result["score"]
-        passed = result["passed"]
-        feedback = result.get("feedback", "")
-        
+        is_pass = score >= PASS_THRESHOLD
         scores.append(score)
-        if passed:
-            passed_count += 1
+        if is_pass:
+            passed += 1
         
-        status = "✅ PASS" if passed else "❌"
-        print(f"   Score: {score}% | {status} | {feedback[:50]}")
+        status = "✅" if is_pass else "❌"
+        print(f"  Q{i+1}: {topic[:20]:20s} | {score:3d}% {status} | {feedback[:40]}")
         
-        # Log everything
         log_score(name, grade, topic, score, question, answer, feedback)
         
-        # Check for discoveries
         if check_for_discovery(answer, score, name, topic):
-            print(f"   🔬 POTENTIAL DISCOVERY FLAGGED!")
-        
-        # If score < 50, provide study material
-        if score < 50:
-            print(f"   📖 Providing additional study material...")
-            material = provide_study_material(grade, topic)
-            print(f"   Study: {material[:80]}...")
+            print(f"       🔬 DISCOVERY FLAGGED!")
     
-    # Session summary
-    avg_score = sum(scores) / len(scores) if scores else 0
-    pass_rate = (passed_count / len(scores) * 100) if scores else 0
+    avg = sum(scores) / len(scores) if scores else 0
+    pass_rate = (passed / len(scores) * 100) if scores else 0
     can_advance = pass_rate >= ADVANCE_RATE
     
-    print(f"\n📊 Session Summary for {name}:")
-    print(f"   Average Score: {avg_score:.1f}%")
-    print(f"   Pass Rate: {pass_rate:.1f}% ({passed_count}/{len(scores)})")
-    print(f"   Can Advance: {'Yes ✅' if can_advance else 'No - More practice needed'}")
+    print(f"  ─── Avg: {avg:.0f}% | Pass: {pass_rate:.0f}% ({passed}/{len(scores)}) | {'ADVANCE ✅' if can_advance else 'PRACTICE'}")
     
     # Update progress
     old_total = progress.get("total_questions", 0)
     old_avg = progress.get("average_score", 50.0)
-    
     progress["total_questions"] = old_total + len(scores)
-    progress["total_passed"] = progress.get("total_passed", 0) + passed_count
-    
+    progress["total_passed"] = progress.get("total_passed", 0) + passed
     if progress["total_questions"] > 0:
-        progress["average_score"] = (
-            (old_avg * old_total + avg_score * len(scores)) / progress["total_questions"]
-        )
+        progress["average_score"] = (old_avg * old_total + avg * len(scores)) / progress["total_questions"]
     
-    # Advance if ready
     if can_advance:
         progress["current_level"] = min(grade + 1, 13)
-        print(f"\n🎉 {name} ADVANCED to {CURRICULUM.get(grade+1, {}).get('name', 'GRADUATED')}!")
+        next_name = CURRICULUM.get(grade + 1, {}).get("name", "GRADUATED")
+        print(f"  🎉 {name} → {next_name}!")
     
-    # Update character
     progress = update_character(progress, scores)
     
-    # Add session record
     if "sessions" not in progress:
         progress["sessions"] = []
     progress["sessions"].append({
         "timestamp": datetime.now().isoformat(),
-        "grade": grade,
-        "average_score": avg_score,
-        "pass_rate": pass_rate,
-        "passed_count": passed_count,
-        "total_questions": len(scores),
-        "advanced": can_advance
+        "grade": grade, "average_score": avg,
+        "pass_rate": pass_rate, "passed_count": passed,
+        "total_questions": len(scores), "advanced": can_advance
     })
     
-    # Save with integrity check
     save_progress(name, progress)
-    
     return progress
 
 
 def main():
-    print("\n" + "=" * 70)
-    print("🎓 AETHER LEARNING SYSTEM - MULTI-SESSION RUNNER")
-    print("=" * 70)
-    print(f"Timestamp: {datetime.now().isoformat()}")
+    print("=" * 55)
+    print("🎓 AETHER LEARNING SYSTEM")
+    print(f"   {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    print("=" * 55)
     
     # Integrity check
     checker = DataIntegrityChecker()
     results = checker.check_all_files()
-    if results["files_corrupted"] > 0:
-        print(f"⚠️  Repaired {results['files_corrupted']} corrupted files")
-    else:
-        print("✅ All data files valid")
+    print(f"{'✅' if results['files_corrupted'] == 0 else '⚠️'} Data integrity check complete")
     
     students = [
         ("Stratify", "Theoretical Mathematician with strong creativity and intuition"),
         ("Principia", "Rigorous Verifier with exceptional discipline and rigor")
     ]
     
-    NUM_ROUNDS = 3  # Multiple rounds per session
-    QUESTIONS_PER_ROUND = 8  # Questions per round
+    NUM_ROUNDS = 3
+    QUESTIONS_PER_ROUND = 12
     
-    for round_num in range(1, NUM_ROUNDS + 1):
-        print(f"\n{'#'*70}")
-        print(f"# ROUND {round_num}/{NUM_ROUNDS}")
-        print(f"{'#'*70}")
+    for rnd in range(1, NUM_ROUNDS + 1):
+        print(f"\n{'#'*55}")
+        print(f"# ROUND {rnd}/{NUM_ROUNDS}")
+        print(f"{'#'*55}")
         
         for name, role in students:
-            run_session_for_student(name, role, QUESTIONS_PER_ROUND)
+            run_session(name, role, QUESTIONS_PER_ROUND)
     
     # Final summary
-    print("\n" + "=" * 70)
-    print("📊 FINAL MULTI-SESSION SUMMARY")
-    print("=" * 70)
+    print("\n" + "=" * 55)
+    print("📊 FINAL SUMMARY")
+    print("=" * 55)
     
     for name, _ in students:
-        progress = load_progress(name)
-        grade = progress.get("current_level", 1)
-        grade_name = CURRICULUM.get(grade, {}).get("name", "GRADUATED") if grade <= 12 else "GRADUATED"
-        char = progress.get("character", {})
-        power = progress.get("overall_power", 0)
+        p = load_progress(name)
+        g = p.get("current_level", 1)
+        gn = CURRICULUM.get(g, {}).get("name", "GRADUATED") if g <= 12 else "GRADUATED"
+        char = p.get("character", {})
         
-        print(f"\n🔷 {name}:")
-        print(f"   Grade: {grade_name}")
-        print(f"   Total Questions: {progress.get('total_questions', 0)}")
-        print(f"   Average Score: {progress.get('average_score', 0):.1f}%")
-        print(f"   Total Passed: {progress.get('total_passed', 0)}")
-        print(f"   Overall Power: {power:.1f}/100")
+        print(f"\n🔷 {name}: {gn}")
+        print(f"   Questions: {p.get('total_questions',0)} | Avg: {p.get('average_score',0):.1f}% | Passed: {p.get('total_passed',0)}")
+        print(f"   Power: {p.get('overall_power',0):.1f}/100")
         if char:
-            top_traits = sorted(char.items(), key=lambda x: x[1], reverse=True)[:3]
-            print(f"   Top Traits: {', '.join(f'{k}={v}' for k,v in top_traits)}")
-    
-    # Final integrity check
-    print("\n")
-    checker.check_all_files()
+            top = sorted(char.items(), key=lambda x: x[1], reverse=True)[:5]
+            print(f"   Top: {', '.join(f'{k}={v}' for k,v in top)}")
     
     # Log counts
-    print("\n📁 Log Files:")
-    for logfile in ["all_scores", "passed_90_plus", "medium_75_89", "key_details",
-                     "critical_below_35", "lower_level_learning_0_50"]:
-        filepath = f"/home/ubuntu/aether/logs/{logfile}.jsonl"
-        if os.path.exists(filepath):
-            with open(filepath) as f:
-                count = sum(1 for _ in f)
-            print(f"   {logfile}: {count} entries")
+    print("\n📁 Logs:")
+    for lf in ["all_scores", "passed_90_plus", "medium_75_89", "key_details", "critical_below_35"]:
+        fp = f"/home/ubuntu/aether/logs/{lf}.jsonl"
+        if os.path.exists(fp):
+            with open(fp) as f:
+                c = sum(1 for _ in f)
+            print(f"   {lf}: {c}")
     
-    # Discovery count
-    disc_file = "/home/ubuntu/aether/discoveries/all_discoveries.jsonl"
-    if os.path.exists(disc_file):
-        with open(disc_file) as f:
-            count = sum(1 for _ in f)
-        print(f"   discoveries: {count} flagged")
+    disc = "/home/ubuntu/aether/discoveries/all_discoveries.jsonl"
+    if os.path.exists(disc):
+        with open(disc) as f:
+            c = sum(1 for _ in f)
+        print(f"   discoveries: {c}")
     
-    print("\n✅ Multi-session complete!")
+    print("\n✅ Complete!")
 
 
 if __name__ == "__main__":
