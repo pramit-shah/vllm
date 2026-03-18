@@ -1,23 +1,23 @@
 {
   "name": "Stratify",
   "role": "Theoretical Mathematician with strong creativity and intuition",
-  "total_questions": 306,
-  "total_passed": 85,
-  "average_score": 81.1980392156863,
-  "current_level": 6,
+  "total_questions": 330,
+  "total_passed": 100,
+  "average_score": 81.95333333333333,
+  "current_level": 7,
   "character": {
     "intelligence": 100,
     "wisdom": 89,
     "creativity": 94,
     "discipline": 100,
-    "perseverance": 95,
-    "focus": 99,
+    "perseverance": 98,
+    "focus": 100,
     "curiosity": 100,
-    "rigor": 97,
+    "rigor": 100,
     "intuition": 92,
     "collaboration": 79
   },
-  "overall_power": 94.5,
+  "overall_power": 95.2,
   "sessions": [
     {
       "timestamp": "2026-01-09T12:00:00",
@@ -100,7 +100,34 @@
       "passed_count": 8,
       "total_questions": 8,
       "advanced": true
+    },
+    {
+      "timestamp": "2026-03-18T00:10:41.962032",
+      "grade": 6,
+      "average_score": 96.625,
+      "pass_rate": 75.0,
+      "passed_count": 6,
+      "total_questions": 8,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-03-18T00:12:15.926685",
+      "grade": 7,
+      "average_score": 90.0,
+      "pass_rate": 62.5,
+      "passed_count": 5,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:13:43.168732",
+      "grade": 7,
+      "average_score": 88.125,
+      "pass_rate": 50.0,
+      "passed_count": 4,
+      "total_questions": 8,
+      "advanced": false
     }
   ],
-  "last_updated": "2026-03-18T00:08:51.764566"
+  "last_updated": "2026-03-18T00:13:43.168796"
 }
