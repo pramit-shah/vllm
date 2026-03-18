@@ -1,28 +1,79 @@
 {
   "name": "Principia",
   "role": "Rigorous Verifier with exceptional discipline and rigor",
-  "total_questions": 258,
-  "total_passed": 54,
-  "average_score": 79.1,
-  "current_level": 4,
+  "total_questions": 282,
+  "total_passed": 68,
+  "average_score": 80.11631205673758,
+  "current_level": 5,
   "character": {
-    "intelligence": 94,
+    "intelligence": 100,
     "wisdom": 89,
     "creativity": 84,
     "discipline": 100,
-    "perseverance": 89,
-    "focus": 99,
+    "perseverance": 92,
+    "focus": 100,
     "curiosity": 100,
     "rigor": 100,
     "intuition": 84,
     "collaboration": 79
   },
-  "overall_power": 91.8,
+  "overall_power": 92.8,
   "sessions": [
-    {"timestamp": "2026-01-09T12:00:00", "grade": 1, "average_score": 78.0, "pass_rate": 44.0, "advanced": true},
-    {"timestamp": "2026-01-09T14:00:00", "grade": 2, "average_score": 80.0, "pass_rate": 48.0, "advanced": true},
-    {"timestamp": "2026-01-09T16:00:00", "grade": 3, "average_score": 82.0, "pass_rate": 52.0, "advanced": true},
-    {"timestamp": "2026-01-10T00:00:00", "grade": 4, "average_score": 86.2, "pass_rate": 50.0, "advanced": false}
+    {
+      "timestamp": "2026-01-09T12:00:00",
+      "grade": 1,
+      "average_score": 78.0,
+      "pass_rate": 44.0,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-01-09T14:00:00",
+      "grade": 2,
+      "average_score": 80.0,
+      "pass_rate": 48.0,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-01-09T16:00:00",
+      "grade": 3,
+      "average_score": 82.0,
+      "pass_rate": 52.0,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-01-10T00:00:00",
+      "grade": 4,
+      "average_score": 86.2,
+      "pass_rate": 50.0,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:01:30.016399",
+      "grade": 4,
+      "average_score": 86.25,
+      "pass_rate": 50.0,
+      "passed_count": 4,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:02:53.487208",
+      "grade": 4,
+      "average_score": 94.375,
+      "pass_rate": 75.0,
+      "passed_count": 6,
+      "total_questions": 8,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-03-18T00:04:16.439135",
+      "grade": 5,
+      "average_score": 92.5,
+      "pass_rate": 50.0,
+      "passed_count": 4,
+      "total_questions": 8,
+      "advanced": false
+    }
   ],
-  "last_updated": "2026-01-10T01:00:00"
+  "last_updated": "2026-03-18T00:04:16.439230"
 }

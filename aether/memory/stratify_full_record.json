@@ -1,28 +1,79 @@
 {
   "name": "Stratify",
   "role": "Theoretical Mathematician with strong creativity and intuition",
-  "total_questions": 258,
-  "total_passed": 52,
-  "average_score": 79.2,
+  "total_questions": 282,
+  "total_passed": 65,
+  "average_score": 80.01276595744682,
   "current_level": 4,
   "character": {
-    "intelligence": 94,
+    "intelligence": 100,
     "wisdom": 89,
     "creativity": 94,
-    "discipline": 94,
-    "perseverance": 89,
-    "focus": 94,
+    "discipline": 100,
+    "perseverance": 92,
+    "focus": 96,
     "curiosity": 100,
-    "rigor": 89,
+    "rigor": 91,
     "intuition": 92,
     "collaboration": 79
   },
-  "overall_power": 91.4,
+  "overall_power": 93.3,
   "sessions": [
-    {"timestamp": "2026-01-09T12:00:00", "grade": 1, "average_score": 79.0, "pass_rate": 45.0, "advanced": true},
-    {"timestamp": "2026-01-09T14:00:00", "grade": 2, "average_score": 80.0, "pass_rate": 50.0, "advanced": true},
-    {"timestamp": "2026-01-09T16:00:00", "grade": 3, "average_score": 81.0, "pass_rate": 55.0, "advanced": true},
-    {"timestamp": "2026-01-10T00:00:00", "grade": 4, "average_score": 88.8, "pass_rate": 50.0, "advanced": false}
+    {
+      "timestamp": "2026-01-09T12:00:00",
+      "grade": 1,
+      "average_score": 79.0,
+      "pass_rate": 45.0,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-01-09T14:00:00",
+      "grade": 2,
+      "average_score": 80.0,
+      "pass_rate": 50.0,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-01-09T16:00:00",
+      "grade": 3,
+      "average_score": 81.0,
+      "pass_rate": 55.0,
+      "advanced": true
+    },
+    {
+      "timestamp": "2026-01-10T00:00:00",
+      "grade": 4,
+      "average_score": 88.8,
+      "pass_rate": 50.0,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:00:54.475901",
+      "grade": 4,
+      "average_score": 93.125,
+      "pass_rate": 50.0,
+      "passed_count": 4,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:02:11.688640",
+      "grade": 4,
+      "average_score": 90.625,
+      "pass_rate": 62.5,
+      "passed_count": 5,
+      "total_questions": 8,
+      "advanced": false
+    },
+    {
+      "timestamp": "2026-03-18T00:03:31.900735",
+      "grade": 4,
+      "average_score": 82.5,
+      "pass_rate": 50.0,
+      "passed_count": 4,
+      "total_questions": 8,
+      "advanced": false
+    }
   ],
-  "last_updated": "2026-01-10T01:00:00"
+  "last_updated": "2026-03-18T00:03:31.900827"
 }
