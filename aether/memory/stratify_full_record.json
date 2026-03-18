@@ -1,0 +1,28 @@
+{
+  "name": "Stratify",
+  "role": "Theoretical Mathematician with strong creativity and intuition",
+  "total_questions": 258,
+  "total_passed": 52,
+  "average_score": 79.2,
+  "current_level": 4,
+  "character": {
+    "intelligence": 94,
+    "wisdom": 89,
+    "creativity": 94,
+    "discipline": 94,
+    "perseverance": 89,
+    "focus": 94,
+    "curiosity": 100,
+    "rigor": 89,
+    "intuition": 92,
+    "collaboration": 79
+  },
+  "overall_power": 91.4,
+  "sessions": [
+    {"timestamp": "2026-01-09T12:00:00", "grade": 1, "average_score": 79.0, "pass_rate": 45.0, "advanced": true},
+    {"timestamp": "2026-01-09T14:00:00", "grade": 2, "average_score": 80.0, "pass_rate": 50.0, "advanced": true},
+    {"timestamp": "2026-01-09T16:00:00", "grade": 3, "average_score": 81.0, "pass_rate": 55.0, "advanced": true},
+    {"timestamp": "2026-01-10T00:00:00", "grade": 4, "average_score": 88.8, "pass_rate": 50.0, "advanced": false}
+  ],
+  "last_updated": "2026-01-10T01:00:00"
+}

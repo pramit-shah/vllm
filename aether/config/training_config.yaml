@@ -1,0 +1,185 @@
+# AETHER Training Configuration
+# Flexible settings for supportive, progressive learning
+# Adjust these values without changing code
+
+# =============================================================================
+# TEACHING PHILOSOPHY
+# =============================================================================
+# "hands_on" = Patient teacher who guides and supports
+# "traditional" = Standard pass/fail approach
+# "adaptive" = Adjusts based on performance
+teaching_style: "hands_on"
+
+# =============================================================================
+# DIFFICULTY PROGRESSION
+# =============================================================================
+difficulty:
+  # Start at this level (1-10, where 1 is easiest)
+  starting_level: 1
+  
+  # How many levels to progress through
+  total_levels: 10
+  
+  # How much score needed to move up (percentage)
+  advancement_threshold: 60  # Lower than before (was 75)
+  
+  # How many questions at each level before moving on
+  questions_per_level: 5  # Fewer questions, more focused
+  
+  # Allow skipping ahead if doing very well
+  allow_skip: true
+  skip_threshold: 85  # Score needed to skip a level
+
+# =============================================================================
+# SCORING (Supportive, not punitive)
+# =============================================================================
+scoring:
+  # Partial credit settings
+  partial_credit: true
+  
+  # Minimum score (no zeros - everyone gets some credit for trying)
+  minimum_score: 20
+  
+  # Bonus for showing work/reasoning
+  reasoning_bonus: 10
+  
+  # Bonus for attempting difficult problems
+  effort_bonus: 5
+  
+  # Score ranges (more granular, more encouraging)
+  ranges:
+    excellent: 85    # Was 90 - more achievable
+    good: 70         # Was 75
+    developing: 50   # Was 60
+    emerging: 30     # New category - still learning
+    beginning: 0     # Just starting
+
+# =============================================================================
+# SUPPORT SETTINGS (Hands-on teacher approach)
+# =============================================================================
+support:
+  # Provide hints before answering
+  hints_enabled: true
+  hints_per_question: 3
+  
+  # Show worked examples first
+  examples_before_questions: true
+  examples_count: 2
+  
+  # Allow multiple attempts
+  multiple_attempts: true
+  max_attempts: 3
+  
+  # Provide immediate feedback
+  immediate_feedback: true
+  
+  # Encouragement messages
+  encouragement: true
+  
+  # When struggling, offer simpler version
+  offer_simpler: true
+  struggle_threshold: 2  # After 2 low scores, offer help
+
+# =============================================================================
+# STUDY MATERIALS
+# =============================================================================
+materials:
+  # How many study items before testing
+  study_before_test: 3
+  
+  # Types of materials to provide
+  types:
+    - conceptual     # Big picture understanding
+    - worked_examples  # Step-by-step solutions
+    - visual         # Diagrams and intuition
+    - practice       # Simple exercises
+    - connections    # Links to other concepts
+  
+  # Depth of explanation (1-5)
+  explanation_depth: 4  # More thorough
+  
+  # Include historical context
+  include_history: true
+  
+  # Include real-world applications
+  include_applications: true
+
+# =============================================================================
+# FEEDBACK STYLE (Encouraging, not critical)
+# =============================================================================
+feedback:
+  # Tone of feedback
+  tone: "encouraging"  # Options: encouraging, neutral, strict
+  
+  # Always start with what they did right
+  positive_first: true
+  
+  # Provide specific improvement suggestions
+  specific_suggestions: true
+  
+  # Celebrate progress, not just perfection
+  celebrate_progress: true
+  
+  # Messages for different score ranges
+  messages:
+    excellent: "Outstanding work! You've really mastered this concept."
+    good: "Great job! You're showing solid understanding."
+    developing: "Good effort! You're on the right track. Let's build on this."
+    emerging: "Nice try! Let's work through this together step by step."
+    beginning: "That's a start! Let me show you another way to think about this."
+
+# =============================================================================
+# PACING
+# =============================================================================
+pacing:
+  # Time between questions (seconds) - allows reflection
+  pause_between: 2
+  
+  # Review previous material periodically
+  review_interval: 5  # Every 5 questions, quick review
+  
+  # Consolidation sessions
+  consolidation_enabled: true
+  consolidation_after: 10  # After every 10 questions
+
+# =============================================================================
+# LOGGING
+# =============================================================================
+logging:
+  # What to log
+  log_all_attempts: true
+  log_hints_used: true
+  log_time_spent: true
+  log_improvement: true
+  
+  # Progress tracking
+  track_trends: true
+  trend_window: 10  # Look at last 10 scores for trend
+  
+  # Celebrate milestones
+  milestone_logging: true
+  milestones:
+    - first_good_score
+    - first_excellent_score
+    - level_advancement
+    - streak_of_3_good
+    - improvement_detected
+
+# =============================================================================
+# ADAPTIVE ADJUSTMENTS
+# =============================================================================
+adaptive:
+  # Automatically adjust difficulty
+  auto_adjust: true
+  
+  # If average drops below this, reduce difficulty
+  reduce_threshold: 40
+  
+  # If average rises above this, increase difficulty
+  increase_threshold: 75
+  
+  # How much to adjust (levels)
+  adjustment_step: 1
+  
+  # Minimum questions before adjusting
+  min_questions_before_adjust: 5

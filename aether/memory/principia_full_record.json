@@ -1,0 +1,28 @@
+{
+  "name": "Principia",
+  "role": "Rigorous Verifier with exceptional discipline and rigor",
+  "total_questions": 258,
+  "total_passed": 54,
+  "average_score": 79.1,
+  "current_level": 4,
+  "character": {
+    "intelligence": 94,
+    "wisdom": 89,
+    "creativity": 84,
+    "discipline": 100,
+    "perseverance": 89,
+    "focus": 99,
+    "curiosity": 100,
+    "rigor": 100,
+    "intuition": 84,
+    "collaboration": 79
+  },
+  "overall_power": 91.8,
+  "sessions": [
+    {"timestamp": "2026-01-09T12:00:00", "grade": 1, "average_score": 78.0, "pass_rate": 44.0, "advanced": true},
+    {"timestamp": "2026-01-09T14:00:00", "grade": 2, "average_score": 80.0, "pass_rate": 48.0, "advanced": true},
+    {"timestamp": "2026-01-09T16:00:00", "grade": 3, "average_score": 82.0, "pass_rate": 52.0, "advanced": true},
+    {"timestamp": "2026-01-10T00:00:00", "grade": 4, "average_score": 86.2, "pass_rate": 50.0, "advanced": false}
+  ],
+  "last_updated": "2026-01-10T01:00:00"
+}
